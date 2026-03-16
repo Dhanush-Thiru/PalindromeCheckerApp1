@@ -1,0 +1,37 @@
+public class PalindromePreProcessor {
+
+    /**
+     * UC10: Normalization Logic
+     * Cleans the string to ensure the palindrome check is accurate.
+     */
+    public static String normalize(String input) {
+        if (input == null) return "";
+
+        // 1. Convert to Lowercase
+        String lower = input.toLowerCase();
+
+        // 2. Apply Regex to remove non-alphanumeric characters
+        // [^a-zA-Z0-9] means "anything that is NOT a-z, A-Z, or 0-9"
+        String clean = lower.replaceAll("[^a-z0-9]", "");
+
+        return clean;
+    }
+
+    public static void main(String[] args) {
+        String rawInput = "No 'x' in Nixon";
+        String cleanInput = normalize(rawInput);
+        
+        System.out.println("Original: " + rawInput);
+        System.out.println("Normalized: " + cleanInput);
+        
+        // Now you can pass 'cleanInput' to UC7, UC8, or UC9
+        boolean result = checkWithAnyMethod(cleanInput);
+        System.out.println("Is Palindrome: " + result);
+    }
+    
+    // Placeholder for your chosen validation method
+    private static boolean checkWithAnyMethod(String s) {
+        // Logic from previous UCs goes here
+        return new StringBuilder(s).reverse().toString().equals(s);
+    }
+}
