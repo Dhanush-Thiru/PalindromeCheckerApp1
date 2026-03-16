@@ -1,0 +1,61 @@
+/**
+ * UC11: Object-Oriented Palindrome Service
+ * This class encapsulates the logic and hides the internal implementation.
+ */
+class PalindromeService {
+
+    // Internal Data Structure: Using a Stack-based approach for this UC
+    // but the user of the class doesn't need to know that!
+    
+    /**
+     * Public method to check palindrome status.
+     * This is the "Service" offered to the rest of the app.
+     */
+    public boolean isValidPalindrome(String input) {
+        if (input == null) return false;
+        
+        String clean = normalize(input);
+        return checkLogic(clean);
+    }
+
+    /**
+     * Encapsulation: The cleaning logic is hidden from the outside world.
+     */
+    private String normalize(String s) {
+        return s.toLowerCase().replaceAll("[^a-z0-9]", "");
+    }
+
+    /**
+     * Internal implementation using an iterative approach.
+     */
+    private boolean checkLogic(String s) {
+        int left = 0;
+        int right = s.length() - 1;
+
+        while (left < right) {
+            if (s.charAt(left) != s.charAt(right)) {
+                return false;
+            }
+            left++;
+            right--;
+        }
+        return true;
+    }
+}
+
+// Main Application class
+public class PalindromeApp {
+    public static void main(String[] args) {
+        // Instantiate the service
+        PalindromeService service = new PalindromeService();
+
+        String testPhrase = "Was it a car or a cat I saw?";
+        
+        // The App only interacts with the public method
+        if (service.isValidPalindrome(testPhrase)) {
+            System.out.println("Result: Palindrome confirmed.");
+        } else {
+            System.out.println("Result: Not a palindrome.");
+        }
+    }
+}
