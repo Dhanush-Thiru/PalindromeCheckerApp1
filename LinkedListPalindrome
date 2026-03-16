@@ -1,0 +1,62 @@
+class Node {
+    char data;
+    Node next;
+    Node(char data) { this.data = data; }
+}
+
+public class LinkedListPalindrome {
+
+    public static boolean isPalindrome(String text) {
+        if (text == null || text.length() <= 1) return true;
+
+        // Clean text and build Singly Linked List
+        String cleanText = text.replaceAll("[^a-zA-Z0-9]", "").toLowerCase();
+        Node head = new Node(cleanText.charAt(0));
+        Node current = head;
+        for (int i = 1; i < cleanText.length(); i++) {
+            current.next = new Node(cleanText.charAt(i));
+            current = current.next;
+        }
+
+        // 1. Find Middle using Fast and Slow pointers
+        Node slow = head;
+        Node fast = head;
+        while (fast != null && fast.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+
+        // 2. Reverse the second half in-place
+        Node secondHalfHead = reverseList(slow);
+        Node firstHalfHead = head;
+
+        // 3. Compare halves
+        Node tempSecond = secondHalfHead;
+        while (tempSecond != null) {
+            if (firstHalfHead.data != tempSecond.data) {
+                return false; 
+            }
+            firstHalfHead = firstHalfHead.next;
+            tempSecond = tempSecond.next;
+        }
+
+        return true;
+    }
+
+    private static Node reverseList(Node head) {
+        Node prev = null;
+        Node current = head;
+        while (current != null) {
+            Node nextNode = current.next;
+            current.next = prev;
+            prev = current;
+            current = nextNode;
+        }
+        return prev;
+    }
+
+    public static void main(String[] args) {
+        String test = "RaceCar";
+        System.out.println("Is \"" + test + "\" a palindrome? " + isPalindrome(test));
+    }
+}
