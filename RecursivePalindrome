@@ -1,0 +1,39 @@
+import java.util.Scanner;
+
+public class RecursivePalindrome {
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter a string: ");
+        String input = scanner.nextLine();
+
+        // Clean input for consistent validation
+        String cleanInput = input.replaceAll("[^a-zA-Z0-9]", "").toLowerCase();
+
+        if (isPalindrome(cleanInput)) {
+            System.out.println("It is a palindrome!");
+        } else {
+            System.out.println("It is NOT a palindrome.");
+        }
+        scanner.close();
+    }
+
+    /**
+     * UC9: Recursive Palindrome Checker
+     */
+    public static boolean isPalindrome(String text) {
+        // Base Condition: A string of length 0 or 1 is always a palindrome
+        if (text.length() <= 1) {
+            return true;
+        }
+
+        // Recursive call: Compare start and end
+        if (text.charAt(0) == text.charAt(text.length() - 1)) {
+            // Recurse with the substring excluding the ends
+            return isPalindrome(text.substring(1, text.length() - 1));
+        }
+
+        // If characters don't match, it's not a palindrome
+        return false;
+    }
+}
